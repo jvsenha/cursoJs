@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(45, 89, 209);
+            color: white;
+            font: normal 15px Arial;
+        }
+    </style>
+</head>
+<body>
+    <h1>Iniciando dom</h1>
+<p>aqui vai o resultado</p>
+<p>aprendendo a usar o <strong>Dom</strong> em java script</p>
+<div id="msg">clique em mim</div>
+<div class="msg">clique em mim denovo</div>
+<script>
+    var corpo=  window.document.body
+    var p1 = document.getElementsByTagName('p')[1]
+   /* p1.style.color = 'black'
+    document.write(p1.innerHTML)
+    document.write('<br/>' + p1.innerText) 
+    var d= window.document.getElementById('msg')
+    d.style.backgroundColor= 'green'
+    d.innerText='estou aguardando...'
+     var d= window.document.getElementsByClassName('msg')[0]
+    d.innerText='estou aguardando...'*/
+    var d= window.document.querySelector('div#msg')
+    d.style.backgroundColor= 'green'
+</script>
+</body>
+</html>                                     
