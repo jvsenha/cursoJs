@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="list-group" id="Receita">
+        <h1>Ingredientes</h1>
+        <div id="ingredientes"></div>
+        <br>
+        <h1>Passos</h1>
+        <div id="Passos"></div>
+
+    <script>
+        const ReceitaDeBolo = {
+            ingrediente: [
+                "2 xícaras de farinha de trigo",
+                "1 xícara de cacau em pó",
+                "1 colher de chá de fermento em pó",
+                "1/2 colher de chá de sal",
+                "2 xícaras de açúcar",
+                "4 ovos",
+                "1 xícara de leite",
+                "1/2 xícara de óleo",
+                "2 colheres de chá de essência de baunilha",
+                "1 xícara de água quente"
+            ],
+            passos: [
+                "Pré-aqueça o forno a 180°C.",
+                "Misture a farinha, o cacau, o fermento e o sal em uma tigela.",
+                "Em outra tigela, bata o açúcar e os ovos até obter uma mistura fofa.",
+                "Adicione o leite, o óleo e a essência de baunilha à mistura de ovos.",
+                "Incorpore gradualmente a mistura de ingredientes secos à mistura de ovos.",
+                "Adicione a água quente e misture bem.",
+                "Despeje a massa em uma forma untada e asse por 30-35 minutos.",
+                "Deixe esfriar antes de servir."
+            ]
+        }
+        let div_rec = document.getElementById("Receita");
+        let itensIngred = document
+
+
+        ReceitaDeBolo.ingrediente.forEach(function (ingredientes) {
+            var label = document.createElement("label");
+            label.classList.add("list-group-item");
+
+            // Criando o elemento input (checkbox)
+            var checkbox = document.createElement("input");
+            checkbox.classList.add("form-check-input", "me-1");
+            checkbox.type = "checkbox";
+            checkbox.value = "";
+
+            // Criando o texto dentro do label
+            var labelText = document.createTextNode(`${ingredientes}`);
+
+            // Adicionando o input e o texto ao label
+            label.appendChild(checkbox);
+            label.appendChild(labelText);
+
+            // Adicionando o label ao documento
+            var container = document.getElementById("ingredientes"); // Onde "container" é o ID do elemento que irá conter o componente
+            container.appendChild(label);
+        });
+        ReceitaDeBolo.passos.forEach(function(passos){
+            var label = document.createElement("label");
+            label.classList.add("list-group-item");
+
+            // Criando o elemento input (checkbox)
+            var checkbox = document.createElement("input");
+            checkbox.classList.add("form-check-input", "me-1");
+            checkbox.type = "checkbox";
+            checkbox.value = "";
+
+            // Criando o texto dentro do label
+            var labelText = document.createTextNode(`${passos}`);
+
+            // Adicionando o input e o texto ao label
+            label.appendChild(checkbox);
+            label.appendChild(labelText);
+
+            // Adicionando o label ao documento
+            var container = document.getElementById("Passos"); // Onde "container" é o ID do elemento que irá conter o componente
+            container.appendChild(label);
+        });
+
+    </script>
+</body>
+
+</html>

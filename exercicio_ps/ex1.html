@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+
+    <main>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Número do Pedido</th>
+                        <th scope="col">Data do Pedido</th>
+                        <th scope="col">Itens</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Endereço</th>
+                        <th scope="col">Cidade</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-pedidos">
+                    <!-- Os pedidos serão adicionados aqui -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        let pedido1 = {
+            numPedido: "0001",
+            dataPedido: "2024-03-22",
+            itens: [
+                {
+                    nome: "Camisa",
+                    quantidade: 2,
+                    precoUnitario: 25.99,
+                },
+                {
+                    nome: "Calça Jeans",
+                    quantidade: 1,
+                    precoUnitario: 39.99,
+                }],
+            cliente: {
+                nome: "João Silva",
+                endereco: "Rua das Flores, 123",
+                cidade: "São Paulo"
+            },
+            status: "Em processamento"
+        };
+        let pedido2 = {
+            numPedido: "0002",
+            dataPedido: "2024-03-21",
+            itens: [
+                {
+                    nome: "Tênis",
+                    quantidade: 1,
+                    precoUnitario: 59.99,
+                },
+                {
+                    nome: "Meias",
+                    quantidade: 3,
+                    precoUnitario: 5.99,
+                }],
+            cliente: {
+                nome: "Maria Souza",
+                endereco: "Av. Principal, 456",
+                cidade: "Rio de Janeiro"
+            },
+            status: "Aguardando pagamento"
+        };
+        let pedido3 = {
+            numPedido: "0003",
+            dataPedido: "2024-03-20",
+            itens: [
+                {
+                    nome: "Celular",
+                    quantidade: 1,
+                    precoUnitario: 699.99,
+                },
+                {
+                    nome: "Fone de Ouvido",
+                    quantidade: 1,
+                    precoUnitario: 29.99,
+                }],
+            cliente: {
+                nome: "Carlos Oliveira",
+                endereco: "Travessa das Palmeiras, 789",
+                cidade: "Belo Horizonte"
+            },
+            status: "Enviado"
+        };
+        let listaPedidos = [pedido1, pedido2, pedido3];
+        let tabelaPedidos = document.getElementById('tabela-pedidos');
+listaPedidos.forEach(function(pedidos){
+    let row= tabelaPedidos.insertRow();
+    
+    let numPedidoCell= row.insertCell(0);
+    numPedidoCell.innerHTML=pedidos.numPedido;
+
+    let dataPedidoCell= row.insertCell(1);
+    dataPedidoCell.innerHTML=pedidos.dataPedido;
+
+    let itensCell = row.insertCell(2);
+    let itensString= "";
+    pedidos.itens.forEach(function(itens){
+        itensString+= `${itens.nome} (${itens.quantidade}) - R$ ${itens.precoUnitario} <br>`;
+    });
+    itensCell.innerHTML = itensString;
+
+    let clienteCell = row.insertCell(3);
+    clienteCell.innerHTML=pedidos.cliente.nome;
+
+    let enderecoCell = row.insertCell(4);
+    enderecoCell.innerHTML = pedidos.cliente.endereco;
+
+    let cidadeCell = row.insertCell(5);
+    cidadeCell.innerHTML = pedidos.cliente.cidade;
+
+    let statusCell = row.insertCell(6);
+    statusCell.innerHTML = pedidos.status;
+
+});
+    </script>
+</body>
+
+</html>
