@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <!--3. Carrinho de Compras: Crie uma função construtora que represente um item de compra com propriedades como
+         nome, preço e quantidade. Permita ao usuário inserir os dados de um item através de um formulário HTML. 
+         Ao clicar no botão cadastrar, insira os itens no carrinho.
+          Crie outro botão que exiba os itens e o valor total da compra na página.-->
+    <div class="m-2">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome">
+    </div>
+    <br>
+    <div class="m-2">
+        <label for="nome">preço</label>
+        <input type="text" id="preco">
+    </div>
+    <br>
+    <div class="m-2">
+        <label for="nome">Quantidade</label>
+        <input type="text" id="quantidade">
+    </div>
+    <br>
+    <div class="m-2">
+        <button type="button" onclick="Cadastrar()" class="btn btn-dark">Cadastrar</button>
+    </div>
+    <div class="m-2">
+        <button type="button" onclick="exibir()" class="btn btn-dark">exibir</button>
+    </div>
+    <br>
+
+    <div class="table-responsive">
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-pedidos">
+
+            </tbody>
+            <tfoot >
+                <th id="total" scope="col" colspan="3">Total:</th>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        var carrinho = []
+        var total = null;
+        function item(Nome, preco, quantidade) {
+            this.Nome = Nome;
+            this.preco = preco;
+            this.quantidade = quantidade;
+        }
+        let tabelaPedidos = document.getElementById('tabela-pedidos');
+        function Cadastrar() {
+            let nome = document.getElementById("nome").value
+            let preco = Number(document.getElementById("preco").value)
+            let quantidade = Number(document.getElementById("quantidade").value)
+            carrinho.push(new item(nome, preco, quantidade))
+            total= total+(preco*quantidade)
+            console.log(carrinho)
+        }
+
+        function exibir() {
+            carrinho.forEach(function (item) {
+                let row = tabelaPedidos.insertRow();
+                let nomeCell = row.insertCell(0);
+                nomeCell.innerHTML = item.Nome
+                let precoCell = row.insertCell(1);
+                precoCell.innerHTML = item.preco
+                let quantidadeCell = row.insertCell(2);
+                quantidadeCell.innerHTML = item.quantidade
+            })
+            document.getElementById("total").innerHTML=`Total: ${total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`
+        }
+    </script>
+</body>
+
+</html>

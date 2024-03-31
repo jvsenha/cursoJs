@@ -1,0 +1,7 @@
+[
+    {"Nome": "João", "disciplina": "Matemática", "média": 8.5},
+    {"Nome": "Maria", "disciplina": "História", "média": 7.2},
+    {"Nome": "Pedro", "disciplina": "Ciências", "média": 9.0},
+    {"Nome": "Ana", "disciplina": "Português", "média": 6.8},
+    {"Nome": "Carlos", "disciplina": "Geografia", "média": 7.5}
+]

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <!--7. Pegar um JSON com um array de 5 objetos (crie um arquivo alunos.json) com as seguintes propriedades: Nome, disciplina e média. Criar 3 botões:
+    * ordenar por nome;
+    * ordenar por nota;
+    * média das notas.-->
+    
+    <div class="m-2">
+        <button type="button" onclick="exibirNome()" class="btn btn-dark">exibir por nome</button>
+        <button type="button" onclick="exibirMedia()" class="btn btn-dark">exibir por media Crescente</button>
+        <button type="button" onclick="exibirMediadesc()" class="btn btn-dark">exibir por media Decrescente</button>
+    </div>
+    <br>
+
+    <div class="table-responsive">
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">disciplina</th>
+                    <th scope="col">média</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-pedidos">
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+       
+        let tabelaPedidos = document.getElementById('tabela-pedidos');
+
+        function exibirNome(){
+            for (let i = tabelaPedidos.rows.length - 1; i >= 0; i--) {
+                tabelaPedidos.deleteRow(i);
+            }
+            //Professor, o Teams não deixa enviar de mais de 10 arquivos, então fiz o código e coloquei o conteúdo do arquivo JSON logo abaixo
+            fetch('alunos.json')
+            .then(response => response.json())
+            .then(data => {
+              let alunos = data;
+              alunos.sort((a, b) => a.Nome.localeCompare(b.Nome))
+              alunos.forEach(function (aluno) {
+                let row = tabelaPedidos.insertRow();
+                let nomeCell = row.insertCell(0);
+                nomeCell.innerHTML = aluno.Nome
+                let disciplinaCell = row.insertCell(1);
+                disciplinaCell.innerHTML = aluno.disciplina
+                let mediaCell = row.insertCell(2);
+                mediaCell.innerHTML = aluno.média
+            })
+            })
+            .catch(error => console.error('Erro ao carregar os alunos:', error));
+           
+        }
+
+        function exibirMedia(){
+            for (let i = tabelaPedidos.rows.length - 1; i >= 0; i--) {
+                tabelaPedidos.deleteRow(i);
+            }
+            fetch('alunos.json')
+            .then(response => response.json())
+            .then(data => {
+              let alunos = data;
+              alunos.sort((a, b) =>b.média - a.média)
+              alunos.forEach(function (aluno) {
+                let row = tabelaPedidos.insertRow();
+                let nomeCell = row.insertCell(0);
+                nomeCell.innerHTML = aluno.Nome
+                let disciplinaCell = row.insertCell(1);
+                disciplinaCell.innerHTML = aluno.disciplina
+                let mediaCell = row.insertCell(2);
+                mediaCell.innerHTML = aluno.média
+            })
+            })
+            .catch(error => console.error('Erro ao carregar os alunos:', error));
+           
+        }
+        function exibirMediadesc(){
+            for (let i = tabelaPedidos.rows.length - 1; i >= 0; i--) {
+                tabelaPedidos.deleteRow(i);
+            }
+            fetch('alunos.json')
+            .then(response => response.json())
+            .then(data => {
+              let alunos = data;
+              alunos.sort((a, b) =>a.média - b.média)
+              alunos.forEach(function (aluno) {
+                let row = tabelaPedidos.insertRow();
+                let nomeCell = row.insertCell(0);
+                nomeCell.innerHTML = aluno.Nome
+                let disciplinaCell = row.insertCell(1);
+                disciplinaCell.innerHTML = aluno.disciplina
+                let mediaCell = row.insertCell(2);
+                mediaCell.innerHTML = aluno.média
+            })
+            })
+            .catch(error => console.error('Erro ao carregar os alunos:', error));
+           
+        }
+ 
+//[{"Nome": "João", "disciplina": "Matemática", "média": 8.5},
+//{"Nome": "Maria", "disciplina": "História", "média": 7.2},
+//{"Nome": "Pedro", "disciplina": "Ciências", "média": 9.0},
+//{"Nome": "Ana", "disciplina": "Português", "média": 6.8},
+//{"Nome": "Carlos", "disciplina": "Geografia", "média": 7.5}]
+
+       
+      
+    </script>
+</body>
+
+</html>

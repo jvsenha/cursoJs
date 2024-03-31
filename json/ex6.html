@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <!--6. Criando uma função construtora para representar um telefone celular: Enunciado:
+         Defina uma função construtora chamada TelefoneCelular que aceite parâmetros como marca, modelo, armazenamento, qtd de núcleos e preço.
+          Utilize um formulário HTML para permitir que o usuário insira informações sobre um telefone celular e exiba os detalhes dele na página.
+           Crie botões para inserir, mostrar em ordem de preço e mostrar em ordem de quantidade de núcleos.-->
+    <div class="m-2">
+        <label for="marca">marca</label>
+        <input type="text" id="marca">
+    </div>
+    <br>
+    <div class="m-2">
+        <label for="modelo">modelo</label>
+        <input type="text" id="modelo">
+    </div>
+    <br>
+    <div class="m-2">
+        <label for="armazenamento">armazenamento</label>
+        <input type="text" id="armazenamento">
+    </div>
+    <br>
+    <div class="m-2">
+        <label for="qtdnucleos"> quantidade de núcleos</label>
+        <input type="text" id="qtdnucleos">
+    </div>
+    <br>
+    <div class="m-2">
+        <label for="preco">preço</label>
+        <input type="text" id="preco">
+    </div>
+    <br>
+    <div class="m-2 col-12">
+        <button type="button" onclick="Cadastrar()" class="btn btn-dark">Cadastrar</button>
+        <button type="button" onclick="exibirPreco()" class="btn btn-success">exibir em ordem de preço</button>
+        <button type="button" onclick="exibirnucleo()" class="btn btn-primary">exibir em ordem de núcleo</button>
+    </div>
+    <br>
+
+    <div class="table-responsive">
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">marca</th>
+                    <th scope="col">modelo</th>
+                    <th scope="col">armazenamento</th>
+                    <th scope="col"> quantidade de núcleos</th>
+                    <th scope="col">Preço</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-pedidos">
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var carrinho = []
+
+        function item(marca, modelo, armazenamento, qtdnucleos, preco) {
+            this.marca = marca;
+            this.modelo = modelo;
+            this.armazenamento = armazenamento;
+            this.qtdnucleos = qtdnucleos;
+            this.preco = preco;
+        }
+
+        let tabelaPedidos = document.getElementById('tabela-pedidos');
+
+        function Cadastrar() {
+            let marca = document.getElementById("marca").value
+            let modelo = document.getElementById("modelo").value
+            let armazenamento = Number(document.getElementById("armazenamento").value)
+            let qtdnucleos = Number(document.getElementById("qtdnucleos").value)
+            let preco = Number(document.getElementById("preco").value)
+            carrinho.push(new item(marca, modelo, armazenamento, qtdnucleos, preco))
+            console.log(carrinho)
+        }
+       function compararPreco(n1, n2) {
+            return parseFloat(n1.preco) - parseFloat(n2.preco);
+        }
+        function compararNucleo(n1, n2) {
+            return n1.qtdnucleos - n2.qtdnucleos;
+        }
+
+        function exibirPreco() {
+            for (let i = tabelaPedidos.rows.length - 1; i >= 0; i--) {
+                tabelaPedidos.deleteRow(i);
+            }
+            let carrinhoCopia = [...carrinho];
+            carrinhoCopia.sort(compararPreco);
+            carrinhoCopia.forEach(function (item) {
+                let row = tabelaPedidos.insertRow();
+                let marcaCell = row.insertCell(0);
+                marcaCell.innerHTML = item.marca
+                let modeloCell = row.insertCell(1);
+                modeloCell.innerHTML = item.modelo
+                let armazenamentoCell = row.insertCell(2);
+                armazenamentoCell.innerHTML = item.armazenamento
+                let qtdnucleosCell = row.insertCell(3);
+                qtdnucleosCell.innerHTML = item.qtdnucleos
+                let precoCell = row.insertCell(4);
+                precoCell.innerHTML = item.preco.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+            })
+        }
+        function exibirnucleo() {
+            for (let i = tabelaPedidos.rows.length - 1; i >= 0; i--) {
+                tabelaPedidos.deleteRow(i);
+            }
+            let carrinhoCopia = [...carrinho];
+            carrinhoCopia.sort(compararNucleo);
+            carrinhoCopia.forEach(function (item) {
+                let row = tabelaPedidos.insertRow();
+                let marcaCell = row.insertCell(0);
+                marcaCell.innerHTML = item.marca
+                let modeloCell = row.insertCell(1);
+                modeloCell.innerHTML = item.modelo
+                let armazenamentoCell = row.insertCell(2);
+                armazenamentoCell.innerHTML = item.armazenamento
+                let qtdnucleosCell = row.insertCell(3);
+                qtdnucleosCell.innerHTML = item.qtdnucleos
+                let precoCell = row.insertCell(4);
+                precoCell.innerHTML = item.preco.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+            })
+        }
+    </script>
+</body>
+
+</html>
