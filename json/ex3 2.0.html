@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+
+    <body>
+        <!--3. Carrinho de Compras: Crie uma função construtora que represente um item de compra com propriedades como
+         nome, preço e quantidade. Permita ao usuário inserir os dados de um item através de um formulário HTML. 
+         Ao clicar no botão cadastrar, insira os itens no carrinho.
+          Crie outro botão que exiba os itens e o valor total da compra na página.-->
+        <div class="container d-flex m-1">
+            <div class="row col-6">
+                <div class="row mb-2">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome">
+                </div>
+                <div class="row mb-2">
+                    <label for="preco">preço</label>
+                    <input type="number" id="preco">
+                </div>
+                <div class="row mb-2">
+                    <label for="quantidade">quantidade</label>
+                    <input type="number" id="quantidade">
+                </div>
+                <div class="row mb-2">
+                    <button type="button" onclick="Cadastrar()" class="btn btn-dark">Cadastrar</button>
+                </div>
+            </div>
+            <div class="row"> 
+                <div class="row">
+                    <h1>carrinho</h1>
+                    <h3 id="carrinho"></h3>
+                </div>
+            </div>
+        </div>
+            <script>
+                let carrinho = []
+                function Item(nome, preco, quantidade) {
+                    this.nome = nome;
+                    this.preco = preco;
+                    this.quantidade = quantidade;
+                }
+
+                function Cadastrar() {
+                    let nome = document.getElementById("nome").value;
+                    let preco = parseFloat(document.getElementById("preco").value);
+                    let quantidade = parseInt (document.getElementById("quantidade").value);
+                    let newItem = new Item(nome, preco, quantidade);
+                    carrinho.push(newItem)
+                    let carrinhoElement = document.getElementById("carrinho");
+                    carrinhoElement.innerHTML = ""
+                    for (let item of carrinho) {
+                        carrinhoElement.innerHTML += `${item.nome} - ${item.preco} - ${item.quantidade} <br>`;
+                    }
+                }
+            </script>
+    </body>
+
+</html>

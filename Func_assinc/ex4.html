@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        label {
+            font-size: 18px;
+        }
+
+        input[type="text"],
+        button {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #info {
+            margin-top: 20px;
+            border: none;
+        }
+
+        #detalhes {
+            margin-top: 20px;
+            border: none;
+            display: grid;
+            flex-wrap: wrap;
+        }
+
+        div img, div a{
+            width: 200px;
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pesquisa</h1>
+    <label for="pesquisa">Pesquisa:</label>
+    <br>
+    <input type="text" id="pesquisa">
+    <br>
+    <button onclick="Pesquisar()">Pesquisar</button>
+
+    <div id="info"></div>
+    <div id="detalhes"></div>
+
+    <script>
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json'
+            }
+        };
+
+        async function Pesquisar() {
+            try {
+                let query = document.getElementById("pesquisa").value.trim(); // Remove espaços em branco no início e no final
+                if (!query) {
+                    console.log("Digite um termo de pesquisa válido.");
+                    return;
+                }
+
+                let apiKey = "AIzaSyBV4nMjdsKi4SydaCNd0e9crMxid6bA1lM";
+                let cx = "603a0562679714dc2";
+                const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}&searchType=image`, options);
+                if (!response.ok) {
+                    throw new Error('Erro na requisição: ' + response.status);
+                }
+                const data = await response.json();
+
+                let infoDiv = document.getElementById("info");
+                infoDiv.innerHTML = "";
+
+                let detalhesDiv = document.getElementById("detalhes");
+                detalhesDiv.innerHTML = "";
+
+                if (data.searchInformation) {
+                    const detalhesInfo = document.createElement("div");
+                    detalhesInfo.innerHTML = `
+                        <h3>Tempo: ${data.searchInformation.formattedSearchTime}</h3>
+                        <p>Total de resultados: ${data.searchInformation.formattedTotalResults}</p>
+                    `;
+                    infoDiv.appendChild(detalhesInfo);
+                }
+
+                if (data.items) {
+                    for (let item of data.items) {
+                        const detalhesPesquisa = document.createElement("div");
+                        detalhesPesquisa.innerHTML = `
+                            <h3>${item.title}</h3>
+                            <a href="${item.link}" target="_blank">link</a>
+                            <img src="${item.link}" alt="Imagem do resultado">
+                        `;
+                        detalhesDiv.appendChild(detalhesPesquisa);
+                    }
+                }
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+
+</html>

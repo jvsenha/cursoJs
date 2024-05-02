@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artigos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        label {
+            font-size: 18px;
+        }
+
+        input[type="text"],
+        button {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #detalhes {
+            margin-top: 20px;
+            border: none;
+        }
+
+        div {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ccc;
+            overflow: hidden;
+        }
+
+        div h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        div h3 {
+            font-size: 18px;
+            margin-top: 0;
+            color: #666;
+        }
+
+        div p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            width: 500px;
+            float: left;
+        }
+
+        div img {
+            width: 200px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>últimos artigos</h1>
+    <br>
+    <button onclick="Pesquisar()">Pesquisa</button>
+    <div id="detalhes">
+
+    </div>
+
+    <script>
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json'
+            }
+        };
+        async function Pesquisar(Num) {
+            try {
+                let apiKey = "43DbzHl3tDPUtFJ0IbBzFq1xMEgyqJkt"
+                const response = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=43DbzHl3tDPUtFJ0IbBzFq1xMEgyqJkt`, options);
+                if (!response.ok) {
+                    throw new Error('Erro na requisição: ' + response.status);
+                }
+                const data = await response.json();
+                let detalhesDiv = document.getElementById("detalhes")
+                for (let i=0; i<5; i++) {
+                    let artigo= data.response.docs[i]
+                    const detalhesArtigos = document.createElement("div")
+                    detalhesArtigos.innerHTML=`
+                    <h2>${artigo.headline.main}</h2>
+                    <h3>publicação: ${artigo.pub_date}</h3>
+                    <a href="${artigo.web_url}" target="_blank">Abrir Noticia</a>
+                    `
+                    detalhesDiv.appendChild(detalhesArtigos)
+                   
+                }
+
+            }
+            catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+
+</html>

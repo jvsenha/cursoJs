@@ -21,7 +21,7 @@ function Animal(Nome, especie, cor, peso) {
 
 const rex = new Animal("rex","cachorro","preto","20.3");
 //rex.emitirSom()
-
+console.log(rex.Nome)
 const max = new Animal("max","gato","preto","20.3");
 //max.emitirSom();
 
