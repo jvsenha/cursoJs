@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Pokemon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            font-size: 16px;
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            font-size: 16px;
+            padding: 8px 15px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        #detalhes {
+            margin-top: 20px;
+        }
+        
+        .pokemon-details {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            overflow: hidden;
+        }
+        
+        .pokemon-details h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .pokemon-details p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .pokemon-details img {
+            width: 150px;
+            margin-right: 20px;
+            float: left;
+        }        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>PokeAPI</h1>
+        <label for="NomePokemon">Selecione um Pokemon:</label>
+        <select name="NomePokemon" id="NomePokemon"></select> <!--Select para pegar o nome do pokemon-->
+        <button onclick="Pesquisar()">Pesquisar</button> <!--botão para chamar a função-->
+
+        <div id="detalhes"></div>
+
+    </div>
+
+    <script>
+        //configuração da requisição do fetch
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+            }
+        };
+
+        // função assincrona para fazer a buscar as informações do pokemon
+        async function Pesquisar() {
+            try {
+                let pesq = document.getElementById("NomePokemon").value//pegar o nome do pokemon no select
+
+                //realizando o fetch e salvando na variável response, passando o parametro recuperado em "pesq" 
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pesq}`, options);
+
+                // se não responder como ok, recupera o status erro
+                if (!response.ok) {
+                    throw new Error('Erro na requisição: ' + response.status);
+                }
+
+                const data = await response.json(); // salva a resposta em forma de json em "data" 
+
+                let detalhesDiv = document.getElementById("detalhes") // recupera o componente div
+
+                detalhesDiv.innerHTML = ("")//limpa os dados anteriores 
+
+                const detalhesPokemon = document.createElement("div") //cria o elemento que ira aparecer na tela
+
+                detalhesPokemon.setAttribute('class', 'pokemon-details')//adiciona a class pokemon-details
+
+                
+                let tipo = []; // cria array para tratar a formatação dos "tipos" do pokemon
+
+                for (let i in data.types) {
+                    tipo[i] = data.types[i].type.name //percorre o array vindo do fetch e atribui ao array tipo 
+                }
+
+                let tipos = tipo.join(", ") // formata o array tipo e atribui a "tipos"
+
+                detalhesPokemon.innerHTML = `
+                    <h2>Nome:</h2><p> ${data.name}</p>
+                    <h2>Tipo:</h2><p>${tipos}</p>
+                   
+                    <img src="${data.sprites.front_default}">
+                   
+                    `
+                detalhesDiv.appendChild(detalhesPokemon)//adiciona elemento do pokemon na div
+            }
+            catch (error) {
+                console.error(error);
+            }
+        }
+// função assincrona para fazer a buscar o nome dos pokemon e carregar no Select
+        async function Carregar() {
+            try {
+
+                //realizando o fetch e salvando na variavel response
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/`, options);
+
+                // se não responder como ok, recupera o status erro
+                if (!response.ok) {
+                    throw new Error('Erro na requisição: ' + response.status);
+                }
+                const data = await response.json(); // salva a resposta em forma de json em "data" 
+
+                let SelectPokemon = document.getElementById("NomePokemon") // recupera o componente select
+
+                //percorrer os resultados do data.results
+                for (let i in data.results) {
+                    let pokemon = data.results[i] //atribui o pokemon igual ao "i"
+
+                    const optionPokemon = document.createElement("option") //cria o elemento que ira aparecer na tela
+
+                    optionPokemon.setAttribute('id', 'Pokemon');//adiciona o id Pokemon
+
+                    //passa as informações do Pokemon
+                    optionPokemon.innerHTML = `
+                    <option value="${pokemon.name}">${pokemon.name}</option>
+                    `;
+                    SelectPokemon.appendChild(optionPokemon); //adiciona elemento do Pokemon na div
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
+        }
+        Carregar()
+
+    </script>
+</body>
+
+</html>

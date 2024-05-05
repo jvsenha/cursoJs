@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+ @license
+ Copyright 2019 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+
+<head>
+    <title>Mapa Google</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
+            ({ key: "AIzaSyCxCx3PgT3DTgWY97nqLDsxzug18AtoPHo", v: "beta" });
+
+      
+        let map;
+
+        async function initMap() {
+            try {
+                //importa as bibliotecas usadas pela API
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+
+                // cria a constante de uma localização
+                const position = {
+                    lat: -20.2759334211461,
+                    lng: -50.54137156377741
+                };
+
+                //cria o mapa passando o zoom, onde sera centralizado, e o id do mapa da api
+                map = new Map(document.getElementById("map"), {
+                    zoom: 8,
+                    center: position,
+                    mapId: "7118039cae9dbea7"
+                });
+
+                //cria as janelas de informações
+                const infoWindowLocAtual = new google.maps.InfoWindow();
+                const infoWindowAquida = new google.maps.InfoWindow();
+                const infoWindowFatec = new google.maps.InfoWindow();
+
+
+                //cria o marcador passando o mapa, posição e o titulo
+                let marker = new AdvancedMarkerView({
+                    map: map,
+                    position: position,
+                    title: "Fatec Jales"
+                });
+                infoWindowFatec.setPosition(position); //seta a posição
+                infoWindowFatec.setContent("Aqui está a fatec Jales");// coloca a legenda da informação
+                infoWindowFatec.open(map);// abre o marcado no mapa
+
+                // cria a constante de uma localização
+                const Aquidauana = {
+                    lat: -20.467616801315305,
+                    lng: -55.783848534726395
+                };
+
+                // cria a variável de uma localização
+                let LocAquidauana = new AdvancedMarkerView({
+                    map: map,
+                    position: Aquidauana,
+                    title: "Aquidauana"
+                });
+                infoWindowAquida.setPosition(Aquidauana);//seta a posição
+                infoWindowAquida.setContent("Aqui está Aquidauana");// coloca a legenda da informação
+                infoWindowAquida.open(map);// abre o marcado no mapa
+
+                //procura a localização do usuário
+                if (navigator.geolocation) {
+
+                    // pede a posição atual do usuário
+                    navigator.geolocation.getCurrentPosition(
+                        // executada quando a localização é encontrada
+                        (position) => {
+                            //extrai as latitudes e as longitudes
+                            let novaPos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+
+
+                            //cria o marcador passando o mapa, posição e o titulo
+                            const NovoMarker = new AdvancedMarkerView({
+                                map: map,
+                                position: novaPos,
+                                title: "Local atual"
+                            });
+
+                            infoWindowLocAtual.setPosition(novaPos);//seta a posição
+                            infoWindowLocAtual.setContent("Aqui esta sua localização atual");
+                            infoWindowLocAtual.open(map);// abre o marcado no mapa
+
+                            map.setCenter(novaPos);// coloca o centro do mapa nma localização "novaPos"
+                        },
+                        () => {
+                            handleLocationError(true, infoWindowLocAtual, map.getCenter());//tramento de erro que a api disponibiliza no exemplos
+                        }
+                    );
+
+
+
+                } else {
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        //trata o erro caso a geolocalização falha o não tem suporte no navegador
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(
+                browserHasGeolocation ?
+                    "Error: The Geolocation service failed." :
+                    "Error: Your browser doesn't support geolocation."
+            );
+            infoWindow.open(map);
+        }
+
+       //chama a função de inicializar o mapa
+        initMap();
+    </script>
+
+</body>
+
+</html>

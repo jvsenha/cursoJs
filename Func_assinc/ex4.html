@@ -49,7 +49,8 @@
             flex-wrap: wrap;
         }
 
-        div img, div a{
+        div img,
+        div a {
             width: 200px;
             margin-left: 20px;
             margin-bottom: 20px;
@@ -69,53 +70,62 @@
     <div id="detalhes"></div>
 
     <script>
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json'
-            }
-        };
-
+      
+        // função assincrona para fazer a busca da pesquisa com o google
         async function Pesquisar() {
             try {
-                let query = document.getElementById("pesquisa").value.trim(); // Remove espaços em branco no início e no final
+
+                //tratar o termo para a pesquisa
+                let query = document.getElementById("pesquisa").value.trim(); // tira os espaços com a função trim
+
                 if (!query) {
-                    console.log("Digite um termo de pesquisa válido.");
-                    return;
+                    return alert("Digite um termo de pesquisa válido."); // avisa que nenhuma pesquisa foi passada
                 }
 
-                let apiKey = "AIzaSyBV4nMjdsKi4SydaCNd0e9crMxid6bA1lM";
-                let cx = "603a0562679714dc2";
-                const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}&searchType=image`, options);
+                let apiKey = "AIzaSyBV4nMjdsKi4SydaCNd0e9crMxid6bA1lM"; //passa a chave da api 
+
+                let cx = "603a0562679714dc2"; // passa o codigo da ferramenta de pequisa do google
+
+                //realizando o fetch e salvando na variavel response, passando a chave da api, o cx e a pesquisa
+                const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}&searchType=image`);
+
+                  // se não responder como ok, recupera o status erro
                 if (!response.ok) {
                     throw new Error('Erro na requisição: ' + response.status);
                 }
-                const data = await response.json();
+                const data = await response.json();     // salva a resposta em forma de json em "data" 
 
-                let infoDiv = document.getElementById("info");
-                infoDiv.innerHTML = "";
+                let infoDiv = document.getElementById("info");// recupera o componente div
+                infoDiv.innerHTML = ""; // limpa as informações anteriores
 
-                let detalhesDiv = document.getElementById("detalhes");
-                detalhesDiv.innerHTML = "";
+                let detalhesDiv = document.getElementById("detalhes");// recupera o componente div
+                detalhesDiv.innerHTML = ""; // limpa as pesquisas anteriores
 
+                // passa as informações da pesquisa
                 if (data.searchInformation) {
-                    const detalhesInfo = document.createElement("div");
+
+                    const detalhesInfo = document.createElement("div"); // cria o componente div
+
                     detalhesInfo.innerHTML = `
                         <h3>Tempo: ${data.searchInformation.formattedSearchTime}</h3>
                         <p>Total de resultados: ${data.searchInformation.formattedTotalResults}</p>
                     `;
-                    infoDiv.appendChild(detalhesInfo);
+                    infoDiv.appendChild(detalhesInfo);//adiciona elemento das informações na div
                 }
 
-                if (data.items) {
-                    for (let item of data.items) {
-                        const detalhesPesquisa = document.createElement("div");
+                if (data.items) { //se houver resultados
+
+                    for (let item of data.items) {// percorra esses items
+
+                        const detalhesPesquisa = document.createElement("div");  // cria o componente div
+
                         detalhesPesquisa.innerHTML = `
                             <h3>${item.title}</h3>
                             <a href="${item.link}" target="_blank">link</a>
                             <img src="${item.link}" alt="Imagem do resultado">
                         `;
-                        detalhesDiv.appendChild(detalhesPesquisa);
+
+                        detalhesDiv.appendChild(detalhesPesquisa);//adiciona elemento das informações na div
                     }
                 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
 
         h1 {
             font-size: 24px;
+            margin-left: 10px;
         }
 
         label {
@@ -49,75 +50,122 @@
             flex-wrap: wrap;
         }
 
-        div img, div a{
+        div img,
+        div a {
             width: 200px;
             margin-left: 20px;
             margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 150px;
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .flex div {
+            margin-left: 10px;
         }
     </style>
 </head>
 
 <body>
     <h1>Pesquisa</h1>
-    <label for="pesquisa">Pesquisa:</label>
-    <br>
-    <input type="text" id="pesquisa">
-    <br>
-    <button onclick="Pesquisar()">Pesquisar</button>
+    <div class="flex">
+        <div>
+            <!-- escolher idiomas e de origem e Saida e escrita de texto  -->
+            <label for="idOrigem">Idioma de Origem</label><br>
+            <select name="idOrigem" id="idOrigem">
+                <option value="en">Inglês</option>
+                <option value="es">Espanhol</option>
+                <option value="pt" selected>Português (Portugal, Brasil)</option>
+                <option value="fr">Francês</option>
+                <option value="de">Alemão</option>
+                <option value="it">Italiano</option>
+                <option value="zh-CN">Chinês (simplificado)</option>
+                <option value="ja">Japonês</option>
+                <option value="ko">Coreano</option>
+                <option value="ru">Russo</option>
+                <option value="ar">Árabe</option>
+                <option value="hi">Hindi</option>
+            </select>
+            <br>
+            <br>
+            <label for="texto">Texto:</label>
+            <br>
+            <textarea id="texto"></textarea>
+        </div>
+        <div>
+
+            <label for="idFinal">Idioma Final</label>
+            <br>
+            <select name="idFinal" id="idFinal">
+                <option value="en">Inglês</option>
+                <option value="es">Espanhol</option>
+                <option value="pt">Português (Portugal, Brasil)</option>
+                <option value="fr">Francês</option>
+                <option value="de">Alemão</option>
+                <option value="it">Italiano</option>
+                <option value="zh-CN">Chinês (simplificado)</option>
+                <option value="ja">Japonês</option>
+                <option value="ko">Coreano</option>
+                <option value="ru">Russo</option>
+                <option value="ar">Árabe</option>
+                <option value="hi">Hindi</option>
+            </select>
+            <br>
+            <br>
+            <label for="traducao">Tradução:</label>
+            <br>
+            <textarea id="traducao"></textarea>
+        </div>
+        <br>
+    </div>
+    <button onclick="Traduzir()">Traduzir</button>
+
 
     <div id="info"></div>
     <div id="detalhes"></div>
-
     <script>
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json'
-            }
-        };
-
-        async function Pesquisar() {
+        //função assincrona para fazer a busca da pesquisa com o google
+        async function Traduzir() {
             try {
-                let query = document.getElementById("pesquisa").value.trim(); // Remove espaços em branco no início e no final
-                if (!query) {
-                    console.log("Digite um termo de pesquisa válido.");
-                    return;
-                }
-
-                let apiKey = "AIzaSyBV4nMjdsKi4SydaCNd0e9crMxid6bA1lM";
-                let cx = "603a0562679714dc2";
-                const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}&searchType=image`, options);
+                //recupera os parâmetros
+                let texto = document.getElementById("texto").value;
+                let idOrigem = document.getElementById("idOrigem").value;
+                let idFinal =  document.getElementById("idFinal").value;
+                let apiKey = "AIzaSyAJZ5OjxmBlL64i61r2TfRpFfZnBOK2tJk";
+    
+                //cria o objeto que sera passado na requisição
+                const data = {
+                    q: texto,
+                    source: idOrigem,
+                    target: idFinal
+                };
+    
+                //realizando o fetch e salvando na variavel response, passando o obj ao invés dos paramentros na URL
+                const response = await fetch("https://translation.googleapis.com/language/translate/v2?key=${apiKey}", {
+                    method: 'POST', //especifica o método HTTP
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)//passa o objeto convertido em string json no body da requisição
+                });
+    
+                // se não responder como ok, recupera o status erro
                 if (!response.ok) {
                     throw new Error('Erro na requisição: ' + response.status);
                 }
-                const data = await response.json();
+    
+                const responseData = await response.json();//salva o response  
+                
+                let traducao = document.getElementById("traducao");// recupera o componente onde sairá a tradução
 
-                let infoDiv = document.getElementById("info");
-                infoDiv.innerHTML = "";
-
-                let detalhesDiv = document.getElementById("detalhes");
-                detalhesDiv.innerHTML = "";
-
-                if (data.searchInformation) {
-                    const detalhesInfo = document.createElement("div");
-                    detalhesInfo.innerHTML = `
-                        <h3>Tempo: ${data.searchInformation.formattedSearchTime}</h3>
-                        <p>Total de resultados: ${data.searchInformation.formattedTotalResults}</p>
-                    `;
-                    infoDiv.appendChild(detalhesInfo);
-                }
-
-                if (data.items) {
-                    for (let item of data.items) {
-                        const detalhesPesquisa = document.createElement("div");
-                        detalhesPesquisa.innerHTML = `
-                            <h3>${item.title}</h3>
-                            <a href="${item.link}" target="_blank">link</a>
-                            <img src="${item.link}" alt="Imagem do resultado">
-                        `;
-                        detalhesDiv.appendChild(detalhesPesquisa);
-                    }
-                }
+                traducao.value = responseData.data.translations[0].translatedText; //mostra a tradução no textArea
 
             } catch (error) {
                 console.error(error);

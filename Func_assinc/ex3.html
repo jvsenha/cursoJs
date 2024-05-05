@@ -83,36 +83,42 @@
     </div>
 
     <script>
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json'
-            }
-        };
+     
+        // função assincrona para fazer a bucas dos artigos
         async function Pesquisar(Num) {
             try {
-                let apiKey = "43DbzHl3tDPUtFJ0IbBzFq1xMEgyqJkt"
-                const response = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=43DbzHl3tDPUtFJ0IbBzFq1xMEgyqJkt`, options);
+                let apiKey = "43DbzHl3tDPUtFJ0IbBzFq1xMEgyqJkt" //chave da api para validação da autenticação
+
+                //realiza a requisição para obter os artigos
+                const response = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=43DbzHl3tDPUtFJ0IbBzFq1xMEgyqJkt`);
+
+                // se não responder como ok, recupera o status erro
                 if (!response.ok) {
                     throw new Error('Erro na requisição: ' + response.status);
                 }
-                const data = await response.json();
-                let detalhesDiv = document.getElementById("detalhes")
-                for (let i=0; i<5; i++) {
-                    let artigo= data.response.docs[i]
-                    const detalhesArtigos = document.createElement("div")
-                    detalhesArtigos.innerHTML=`
+
+                const data = await response.json();  // salva a resposta em forma de json em "data" 
+
+                let detalhesDiv = document.getElementById("detalhes") // recupera o componente div
+
+                for (let i=0; i<5; i++) { //for para pegar os 5 primeiros artigos 
+
+                    let artigo= data.response.docs[i] //salva o response do data pegando a propriedade docs
+
+                    const detalhesArtigos = document.createElement("div") //cria o elemento do artigo que ira aparecer na tela
+
+                    detalhesArtigos.innerHTML=` 
                     <h2>${artigo.headline.main}</h2>
                     <h3>publicação: ${artigo.pub_date}</h3>
                     <a href="${artigo.web_url}" target="_blank">Abrir Noticia</a>
                     `
-                    detalhesDiv.appendChild(detalhesArtigos)
+                    detalhesDiv.appendChild(detalhesArtigos)//adiciona elemento do artigo na div
                    
                 }
 
             }
             catch (error) {
-                console.error(error);
+                console.error(error);// captura o erro e dá um console no terminal
             }
         }
     </script>

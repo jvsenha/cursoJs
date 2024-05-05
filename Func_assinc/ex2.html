@@ -74,11 +74,12 @@
 </head>
 
 <body>
+
     <h1>Pesquise o filme</h1>
     <br>
     <label for="pesquisa">Nome do flime:</label>
     <br>
-    <input type="text" id="pesquisa">
+    <input type="text" id="pesquisa"> <!--entrada do nome do filme-->
     <br>
     <button onclick="Pesquisar()">Pesquisa</button>
     <div id="detalhes">
@@ -86,6 +87,7 @@
     </div>
 
     <script>
+        //configuração da requisição do fetch passando o token de autorização
         const options = {
             method: 'GET',
             headers: {
@@ -94,25 +96,37 @@
             }
         };
 
+        // função assincrona para fazer a bucas do filme
         async function Pesquisar() {
             try {
-                let pesq = document.getElementById("pesquisa").value
+                let pesq = document.getElementById("pesquisa").value //pegar o nome do filme no input
+
+                //realizando o fetch e salvando na variavel response, passando o parametro recuperado em "pesq" 
                 const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${pesq}&include_adult=false&language=pt-br&page=1`, options);
+                
+                // se não responder como ok, recupera o status erro
                 if (!response.ok) {
                     throw new Error('Erro na requisição: ' + response.status);
                 }
-                const data = await response.json();
-                let detalhesDiv = document.getElementById("detalhes")
+
+                const data = await response.json(); // salva a resposta em forma de json em "data" 
+
+                let detalhesDiv = document.getElementById("detalhes") // recupera o componente div
+
+                //percorrer os resultados do data.results
                 for (let i in data.results) {
-                    let filme = data.results[i]
-                    const detalhesFilmes = document.createElement("div")
-                    detalhesFilmes.innerHTML=`
+                    let filme = data.results[i] //coloca o filme igual ao "i"
+
+                    const detalhesFilmes = document.createElement("div") //cria o elemento que ira aparecer na tela
+                    
+                    //passa as informações do filme atual
+                    detalhesFilmes.innerHTML = `
                     <h2>${filme.title}</h2>
                     <h3>Lancamento: ${filme.release_date}</h3>
                     <p>${filme.overview}</p>
                     <img src="https://image.tmdb.org/t/p/w500/${filme.poster_path}">
                     `
-                    detalhesDiv.appendChild(detalhesFilmes)
+                    detalhesDiv.appendChild(detalhesFilmes)//adiciona elemento do filme na div
                 }
             }
             catch (error) {
