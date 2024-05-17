@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="frutas"></div>
+
+    <script>
+        const frutas = [
+            "Banana",
+            "Maça",
+            "Melão",
+            "Melancia",
+            "Pera",
+        ];
+
+        let div = document.getElementById("frutas")
+
+        function verificar() {
+            frutas.map(fruta => {
+                let checkboxFrutas = document.createElement("input");
+                checkboxFrutas.type = "checkbox";
+                checkboxFrutas.value = fruta;
+
+                checkboxFrutas.onchange = function () {
+                    let label = this.nextElementSibling;
+                    if (this.checked) {
+                        label.innerText += " deliciosa";
+                    } else {
+                        label.innerText = label.innerText.replace(" deliciosa", "");
+                    }
+                };
+
+                let label = document.createElement("label");
+                label.innerText = fruta;
+
+
+                div.appendChild(checkboxFrutas);
+                div.appendChild(label);
+                div.appendChild(document.createElement("br"));
+            });
+
+            let labelArray = document.createElement("label");
+            labelArray.innerText = frutas.join(' deliciosa ,');
+            div.appendChild(labelArray)
+        }
+
+        verificar();
+    </script>
+</body>
+
+</html>
