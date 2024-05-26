@@ -85,6 +85,11 @@
 
         <div class="header-btn">
           <h2>Tarefas Concluida</h2>
+          <div class="funcoes">
+
+            
+            <button class="btn btn-outline-danger" onclick="RemoverCld()"><i class="bi bi-trash"></i> Remover</button>
+          </div>
         </div>
         <hr />
       </div>
@@ -139,20 +144,27 @@
     };
 
     function Remover() {
-      let tarefas = document.getElementsByName("tarefa");
-      let novaListaCld = [];
-      let novaListaPend = [];
-
-      for (let i = 0; i < tarefas.length; i++) {
-        if (!tarefas[i].checked) {
-          novaListaPend.push(listPend[i]);
-          novaListaCld.push(listCld[i]);
+      const tarefas = document.getElementsByName("tarefa");
+    
+      for (let i = tarefas.length - 1; i >= 0; i--) {
+        if (tarefas[i].checked) {
+          listPend.splice(i, 1);
         }
       }
-
-      listPend = novaListaPend;
-      listCld = novaListaCld;
+    
       divListPend.innerHTML = "";
+      listar();
+    }
+
+    function RemoverCld() {
+      const tarefas = document.getElementsByName("tarefa");
+    
+      for (let i = tarefas.length - 1; i >= 0; i--) {
+        if (tarefas[i].checked) {
+          listCld.splice(i, 1);
+        }
+      }
+    
       divListCld.innerHTML = "";
       listar();
     }

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+
+    <style>
+        body{
+            background-color: rgb(221, 221, 221);
+        }
+        main {
+            padding: 3em;
+        }
+
+        .PB-range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #424242;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .PB-range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #000000;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .PB-range-slider::-webkit-slider-thumb:hover {
+            box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 0.16);
+            transition: 0.3s ease-in-out;
+        }
+
+        .PB-range-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #000000;
+            cursor: pointer;
+        }
+
+        .PB-range-slider-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+           
+        }
+
+        .PB-range-slidervalue {
+            font-weight: 600;
+        }
+
+        .ranges {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .grafico {
+            width: 100%;
+        }
+
+        section {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .div-hr {
+            display: flex;
+            padding: 1em;
+            align-items: center;
+        }
+
+        hr {
+            width: 50%;
+            height: 10px;
+            opacity: 100;
+            border-radius: 5px;
+            transition: width 0.5s; 
+        }
+
+        #hr1 {
+            background-color: rgba(32, 163, 163, 0.85);
+            border: 1px;
+        }
+
+        #hr2 {
+            background-color: rgba(13, 94, 31, 0.85);
+            border: 1px;
+        }
+
+        #hr3 {
+            background-color: rgba(37, 10, 84, 0.85);
+            border: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <p class="navbar-brand" href="#">Gráfico 📊 de barras dinâmico</p>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div class="ranges">
+                <div class="PB-range-slider-div">
+                    <input type="range" min="0" max="900" class="PB-range-slider" id="myRange0" name="myRange0">
+                    <p class="PB-range-slidervalue">0px</p>
+                </div>
+                <div class="PB-range-slider-div">
+                    <input type="range" min="0" max="900" class="PB-range-slider" id="myRange1" name="myRange1">
+                    <p class="PB-range-slidervalue">0px</p>
+                </div>
+                <div class="PB-range-slider-div">
+                    <input type="range" min="0" max="900" class="PB-range-slider" id="myRange2" name="myRange2">
+                    <p class="PB-range-slidervalue">0px</p>
+                </div>
+            </div>
+            <div class="grafico">
+                <div class="div-hr">
+                    <hr id="hr1">
+                </div>
+                <div class="div-hr">
+                    <hr id="hr2">
+                </div>
+                <div class="div-hr">
+                    <hr id="hr3">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let ranges = document.getElementsByClassName("ranges")
+        let myRange0 = document.getElementById("myRange0")
+        let myRange1 = document.getElementById("myRange1")
+        let myRange2 = document.getElementById("myRange2")
+        let hr1 = document.getElementById("hr1")
+        let hr2 = document.getElementById("hr2")
+        let hr3 = document.getElementById("hr3")
+
+        let valores = [12, 3, 6]
+
+        hr1.style.width = `${valores[0]}px`;
+        hr2.style.width = `${valores[1]}px`;
+        hr3.style.width = `${valores[2]}px`;
+
+        myRange0.value = valores[0];
+        myRange1.value = valores[1];
+        myRange2.value = valores[2];
+
+        document.querySelectorAll('.PB-range-slidervalue')[0].innerText = `${valores[0]}px`;
+        document.querySelectorAll('.PB-range-slidervalue')[1].innerText = `${valores[1]}px`;
+        document.querySelectorAll('.PB-range-slidervalue')[2].innerText = `${valores[2]}px`;
+
+        myRange0.addEventListener('input', function () {
+            valores[0] = myRange0.value;
+            document.querySelectorAll('.PB-range-slidervalue')[0].innerText = `${valores[0]}px`;
+            setTimeout(() => {
+                hr1.style.width = `${valores[0]}px`;
+            }, 200);
+        });
+
+        myRange1.addEventListener('input', function () {
+            valores[1] = myRange1.value;
+            document.querySelectorAll('.PB-range-slidervalue')[1].innerText = `${valores[1]}px`;
+            setTimeout(() => {
+                hr2.style.width = `${valores[1]}px`;
+            }, 200);
+        });
+
+        myRange2.addEventListener('input', function () {
+            valores[2] = myRange2.value;
+            document.querySelectorAll('.PB-range-slidervalue')[2].innerText = `${valores[2]}px`;
+            setTimeout(() => {
+                hr3.style.width = `${valores[2]}px`;
+            }, 200);
+        });
+
+    </script>
+
+
+</body>
+
+</html>
