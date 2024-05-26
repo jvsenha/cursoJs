@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Gerenciador de tarefas</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .header-btn {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    hr {
+
+      height: 2px;
+      background-color: black;
+      margin: 0;
+    }
+
+    .header-div {
+      margin-bottom: 10px;
+    }
+
+    .tarefa {
+      width: 30%;
+      height: 35px;
+      padding: .375rem .75rem;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: black;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-color: var(--bs-body-bg);
+      background-clip: padding-box;
+      border: var(--bs-border-width) solid var(--bs-border-color);
+      border-radius: var(--bs-border-radius);
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <p class="navbar-brand" href="#">Gerenciador de Tarefas</p>
+      </div>
+    </nav>
+  </header>
+  <main class="mt-4">
+    <div class="container-fluid">
+      <div class="header-div">
+        <div class="header-btn">
+
+          <h2>Tarefas Pendentes</h2>
+          <div class="funcoes">
+
+            <input id="Tarefa" type="text" class="tarefa" placeholder="Nova tarefa">
+            <button class="btn btn-outline-primary" onclick="Cadastrar()"><i class="bi bi-plus-square-fill"></i>Cadastrar</button>
+            <button class="btn btn-outline-danger" onclick="Remover()"><i class="bi bi-trash"></i> Remover</button>
+            <button class="btn btn-outline-success"  onclick="Concluido()"><i class="bi bi-check2-square"></i>Concluida</button>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      <div id="tarefasPend"></div>
+
+    </div>
+    <div class="container-fluid mt-4">
+      <div class="header-div">
+
+        <div class="header-btn">
+          <h2>Tarefas Concluida</h2>
+        </div>
+        <hr />
+      </div>
+      <div>
+        <div id="tarefasCld"></div>
+      </div>
+    </div>
+  </main>
+  <script>
+    let divListPend = document.getElementById("tarefasPend");
+    let divListCld = document.getElementById("tarefasCld");
+    let novaTarefa = document.getElementById("Tarefa");
+    let listPend = [];
+    let listCld = [];
+
+
+    function listar() {
+
+      for (let i of listPend) {
+        const tarefas = document.createElement("div");
+
+        tarefas.innerHTML = `<div class="form-check">
+          <input type = "checkbox" name = "tarefa" class="form-check-input" />
+          <label for="" class="form-check-label"> ${i} </label> </div >`;
+
+        divListPend.appendChild(tarefas);
+      };
+
+      for (let i of listCld) {
+        const tarefas = document.createElement("div");
+
+        tarefas.innerHTML = `<div class="form-check">
+          <input type="checkbox" name="tarefa" class="form-check-input" value="${i}" />
+          <label for="" class="form-check-label">${i}</label>
+        </div>`;
+
+        divListCld.appendChild(tarefas);
+      };
+
+    };
+
+
+    function Cadastrar() {
+      console.log(novaTarefa.value)
+      if(novaTarefa.value!=""){
+        listPend.push(novaTarefa.value)
+      }else{
+        alert("Escreva o nome da tarefa")
+      }
+      divListPend.innerHTML = ""
+      listar();
+    };
+
+    function Remover() {
+      let tarefas = document.getElementsByName("tarefa");
+      let novaListaCld = [];
+      let novaListaPend = [];
+
+      for (let i = 0; i < tarefas.length; i++) {
+        if (!tarefas[i].checked) {
+          novaListaPend.push(listPend[i]);
+          novaListaCld.push(listCld[i]);
+        }
+      }
+
+      listPend = novaListaPend;
+      listCld = novaListaCld;
+      divListPend.innerHTML = "";
+      divListCld.innerHTML = "";
+      listar();
+    }
+
+    function Concluido(){
+      let tarefas = document.getElementsByName("tarefa");
+      let novaListaCld = [];
+      let novaListaPend = [];
+
+      for (let i = 0; i < tarefas.length; i++) {
+        if (!tarefas[i].checked) {
+          novaListaPend.push(listPend[i]);
+        }else{
+          novaListaCld.push(listPend[i]);
+          console.log(novaListaCld)
+        }
+      }
+
+      listPend = novaListaPend;
+      listCld = novaListaCld;
+      divListPend.innerHTML = "";
+      divListCld.innerHTML = "";
+      listar();
+    }
+    
+
+    listar();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const dados = [100, "Pedro", 444.03, "R$ 10,00", 4];
+
+        const parMult = dados.filter(dado => typeof dado === 'number' && dado % 2 === 0).map(dado => dado * 2);
+
+    
+        document.write("<h3>Array de Dados:</h3>");
+        document.write("<p>" + JSON.stringify(dados) + "</p>");
+
+        
+        document.write("<h3>Resultado:</h3>");
+        document.write("<p>" + JSON.stringify(parMult) + "</p>");
+    </script>
+</body>
+
+</html>

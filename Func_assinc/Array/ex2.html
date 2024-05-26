@@ -1,0 +1,40 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="resultado"></div>
+    <script>
+        const produtos = [
+    {nome: "Camiseta", preco: 25.99},
+    {nome: "Calça Jeans", preco: 69.99},
+    {nome: "Tênis", preco: 490.99},
+    {nome: "short", preco: 17.99},
+    {nome: "Meias", preco: 9.99}
+];
+
+const produto = produtos.filter(prod => prod.preco<=50).sort((a,b)=>a.preco-b.preco);
+
+document.getElementById("resultado").innerHTML = `
+<h3>Array de produtos:</h3>
+    <ul>
+        ${produtos.map(produtos => `<li>${produtos.nome}  - ${produtos.preco} </li>`).join('')}
+    </ul>
+<h3> produtos com preço abaixo de 50 :</h3>
+    <ul>
+        ${produto.map(produto => `<li>${produto.nome} - ${produto.preco} </li>`).join('')}
+    </ul>
+`;
+
+
+
+</script>
+</body>
+</html>
+
+

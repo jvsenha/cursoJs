@@ -9,7 +9,7 @@
 
 <body>
     <div id="frutas"></div>
-
+    <button onclick="verificar()">Selecionar</button>
     <script>
         const frutas = [
             "Banana",
@@ -19,38 +19,48 @@
             "Pera",
         ];
 
-        let div = document.getElementById("frutas")
 
-        function verificar() {
+        let div = document.getElementById("frutas");
+        let labelArray = document.createElement("label");
+
+        function Lista() {
             frutas.map(fruta => {
                 let checkboxFrutas = document.createElement("input");
                 checkboxFrutas.type = "checkbox";
                 checkboxFrutas.value = fruta;
-
-                checkboxFrutas.onchange = function () {
-                    let label = this.nextElementSibling;
-                    if (this.checked) {
-                        label.innerText += " deliciosa";
-                    } else {
-                        label.innerText = label.innerText.replace(" deliciosa", "");
-                    }
-                };
+                checkboxFrutas.name = "fruta";
 
                 let label = document.createElement("label");
                 label.innerText = fruta;
-
 
                 div.appendChild(checkboxFrutas);
                 div.appendChild(label);
                 div.appendChild(document.createElement("br"));
             });
-
-            let labelArray = document.createElement("label");
-            labelArray.innerText = frutas.join(' deliciosa ,');
-            div.appendChild(labelArray)
         }
 
-        verificar();
+
+        function verificar() {
+            labelArray.innerHTML = "";
+            let checkbox = document.getElementsByName("fruta");
+            let frutasSelect = [];
+
+            for (let i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].checked) {
+                    frutasSelect.push(checkbox[i].value);
+                }
+            }
+
+            if (frutasSelect.length > 0) {
+                const novaLista = frutasSelect.map(fruta => fruta + " deliciosa").join(', ');
+                labelArray.innerHTML = novaLista ;
+                div.appendChild(labelArray);
+            } else {
+                alert("Nenhuma fruta foi selecionada");
+            }
+        }
+
+        Lista();
     </script>
 </body>
 

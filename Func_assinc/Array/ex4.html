@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const notas = [2, 7, 10, 10, 4];
+        let notasFitro = notas.filter(nota => nota >= 7);
+        let somaNotas = notasFitro.reduce((soma, atual) => (soma + atual));
+        let mediaNotas = somaNotas / notasFitro.length;
+        
+        document.write("<h3>notas:</h3>");
+        document.write("<p> notas:" + JSON.stringify(notas) + "</p>");
+
+        document.write("<h3>Resultado:</h3>");
+        document.write("<p> notas filtradas:" + JSON.stringify(notasFitro) + "</p>");
+        document.write("<p> média: " + JSON.stringify(mediaNotas) + "</p>");
+      
+    </script>
+</body>
+
+</html>

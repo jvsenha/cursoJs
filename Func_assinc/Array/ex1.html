@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const valores = [1, 2, 3, 4, 5];
+
+        const valoresQuadrados = valores.map(num => num ** num)
+            .filter(num => num % 2 == 0)
+            .reduce((soma, valor) => soma + valor, 0);
+
+        document.write("<h3>Array de valores:</h3>");
+        document.write("<p>" + JSON.stringify(valores) + "</p>");
+
+
+        document.write("<h3> soma dos quadrados dos números pares em `valores`:</h3>");
+        document.write("<p>" + JSON.stringify(valoresQuadrados) + "</p>");
+    </script>
+</body>
+
+</html>

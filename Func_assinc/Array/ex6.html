@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const dados =[12,5,6,4];
+
+const quadrado = dados.map(num=>num*num);
+const menos25 = quadrado.indexOf(quadrado.find(quadrado => quadrado<25));
+
+
+
+document.write("<h3>dados:</h3>");
+document.write("<p>" +dados+ "</p>");
+
+document.write("<h3>Resultado:</h3>");
+document.write("ultima numero menor que 25 esta na posição: " + menos25);
+
+</script>
+</body>
+</html>

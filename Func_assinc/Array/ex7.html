@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="result"></div>
+    <script>
+const livros = [
+    { nome: "harry potter", pag: 800 },
+    { nome: "pequena sereia", pag: 100 },
+    { nome: "diario de um banana", pag: 200 },
+    { nome: "lady killers", pag: 10000 },
+    { nome: "o povo do ar", pag: 50000 }
+];
+
+document.getElementById('result').innerHTML = `
+<h3>Livros ordenados por páginas:</h3>
+<ul>
+    ${livros.map(livro => `<li>${livro.nome}: ${livro.pag} páginas</li>`).join('')}
+</ul>
+`;
+
+const ordem =
+livros.sort((livro1, livro2) => livro2.pag - livro1.pag)
+      .reduce((maior, atual) => {
+        if (maior.pub < atual.pub) {
+            maior = atual
+        }
+        return maior
+    });
+
+
+    document.write("<h3>Resultado:</h3>");
+    document.write(`<li>${ordem.nome}: ${ordem.pag} páginas</li>`);
+
+    
+</script>
+</body>
+</html>
+

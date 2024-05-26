@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calculadora</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Minha Navbar</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <button class="btn-nav  nav-link" aria-current="page" href="#" onclick=" trocaInter()">Intervalo de confiança</button>
+              </li>
+              <li class="nav-item">
+                <button class="btn-nav nav-link" href="#" onclick="trocaTam()">Tamanho da amostra</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="Intervalo">
+        <div class="card">
+          <p class="card__title">Intervalo de confiança - Média</p>
+          <div class="card__content">
+            <div class="div-card">
+              <label for="">grau de confiança (z):</label>
+              <select id="zScore">
+                <option value="1.645">90%</option>
+                <option value="1.96">95%</option>
+                <option value="2.575">99%</option>
+              </select>
+            </div>
+            <div class="div-card">
+              <label for="">Média:</label>
+              <input type="text" id="media"/>
+            </div>
+            <div class="div-card">
+              <label for="">Desvio padrão:</label>
+              <input type="text" id="stdDev"/>
+            </div>
+            <div class="div-card">
+              <label for="">Tamanho da amostra:</label>
+              <input type="text" id="sampleSize"/>
+            </div>
+            <button onclick="IntervaloConfi()">Calcular</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="card__title">Intervalo de confiança - Proporção</p>
+          <div class="card__content">
+            <div class="div-card">
+              <label for="">grau de confiança (z):</label>
+              <select id="zScore_intProp">
+                <option value="1.645">90%</option>
+                <option value="1.96">95%</option>
+                <option value="2.575">99%</option>
+              </select>
+            </div>
+            <div class="div-card">
+              <label for="">Proporção da População:</label>
+              <input type="text" id="p"/>
+            </div>
+            <div class="div-card">
+              <label for="">Tamanho da Amostra (n):</label>
+              <input type="text" id="sampleSize_intProp"/>
+            </div>
+
+            <button onclick="IntervaloConfiProp()">Calcular</button>
+          </div>
+        </div>
+      </div>
+      <div class="Tamanho none">
+        <div class="card">
+          <p class="card__title">Tamanho da amostra - Média</p>
+          <div class="card__content">
+            <div class="div-card">
+              <label for="">grau de confiança (z):</label>
+              <select id="zScore_tam">
+                <option value="1.645">90%</option>
+                <option value="1.96">95%</option>
+                <option value="2.575">99%</option>
+              </select>
+            </div>
+            <div class="div-card">
+              <label for="">Desvio padrão:</label>
+              <input type="text" id="stdDev_tam"/>
+            </div>
+            <div class="div-card">
+              <label for="">Margem de Erro (Em):</label>
+              <input type="text" id="erroM"/>
+            </div>
+            <button onclick="TamanhoAmostra()">Calcular</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="card__title">Tamanho da amostra - Proporção</p>
+          <div class="card__content">
+            <div class="div-card">
+              <label for="">grau de confiança (z):</label>
+              <select id="zScore_tamProp">
+                <option value="1.645">90%</option>
+                <option value="1.96">95%</option>
+                <option value="2.575">99%</option>
+              </select>
+            </div>
+            <div class="div-card">
+              <label for="">Proporção da População (P):</label>
+              <input type="text" id="p_tamProp"/>
+            </div>
+            <div class="div-card">
+              <label for="">Margem de Erro (EP)</label>
+              <input type="text" id="erroM_tamProp"/>
+            </div>
+
+            <button onclick="TamanhoAmostraProp() ">Calcular</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

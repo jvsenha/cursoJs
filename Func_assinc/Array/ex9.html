@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="resultado"></div>
+    <script>
+const alunos = [
+    { nome: "harry", idade: 17, nota:1 },
+    { nome: "pedro", idade: 18, nota: 2},
+    { nome: "davi", idade: 18, nota:9.9 },
+    { nome: "luana", idade: 18, nota:4.9 },
+    { nome: "josé", idade: 17, nota:10 }
+];
+
+const maiorNota = alunos.reduce((maior, atual) => {return (atual.nota > maior.nota) ? atual : maior;}) ;
+
+
+const aprovado = alunos.map(aluno =>  (aluno.nota > 7)?aluno.nome+" foi aprovado":aluno.nome+" foi reprovado" );
+
+
+const resultadoHTML = `
+            <h3>Aluno com a Maior Nota:</h3>
+            <p>Nome: ${maiorNota.nome}, Idade: ${maiorNota.idade}, Nota: ${maiorNota.nota}</p>
+            <h3>Resultado da Aprovação:</h3>
+            <ul>
+                ${aprovado.map(resultado => `<li>${resultado}</li>`).join('')}
+            </ul>
+        `;
+
+        document.getElementById("resultado").innerHTML = resultadoHTML;
+</script>
+</body>
+</html>
+

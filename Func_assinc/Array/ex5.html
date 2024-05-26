@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        const cidade = [
+            { nome: "jales", pub: 20000 },
+            { nome: "são josé", pub: 3.000 },
+            { nome: "fernandópolis", pub: 70000 },
+            { nome: "rio preto", pub: 100000 },
+            { nome: "votuporanga", pub: 50000 }
+        ];
+
+        const maispub = cidade.reduce((maior, atual) => {
+            if (maior.pub < atual.pub) {
+                maior = atual
+            }
+            return maior
+        });
+       
+
+        document.getElementById("resultado").innerHTML = `
+        <h3>Array de cidade:</h3>
+            <ul>
+                ${cidade.map(cidade => `<li>${cidade.nome}</li>`).join('')}
+            </ul>
+        `;
+
+
+        document.write("<h3>Resultado:</h3>");
+        document.write("<p>" + JSON.stringify(maispub) + "</p>");
+    </script>
+</body>
+
+</html>

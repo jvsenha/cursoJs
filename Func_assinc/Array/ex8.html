@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const cores=["azul","verde","amarelo","branco","preto"];
+
+const Filtrada=cores.map(cor => cor.toUpperCase()).filter(cor => cor[0] === "B" );
+
+document.write("<h3>cores:</h3>");
+document.write("<p>" +cores+ "</p>");
+
+document.write("<h3>Resultado:</h3>");
+document.write("<p>" +Filtrada+ "</p>");
+
+</script>
+</body>
+</html>

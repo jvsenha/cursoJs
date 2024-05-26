@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin: 10px 10px 10px 10px;
+        }
+
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            width: 70%;
+        }
+
+        .card {
+            margin: .5em;
+        }
+
+        .carrinho {
+            border: 2px solid rgb(33, 37, 41, 0.3);
+            width: 25%;
+            height: 40em;
+            margin: 10px auto;
+            border-radius: 0.4em;
+            padding: 1.5em;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <p class="navbar-brand" href="#">Carrinho</p>
+            </div>
+        </nav>
+    </header>
+    <main>
+
+        <div class="main" id="main">
+
+        </div>
+        <div class="carrinho" id="carrinho">
+            <div>
+                <h2>Carrinho</h3>
+                    <div id="prodCar">
+
+                    </div>
+            </div>
+            <div>
+                <h3>Soma:</h3>
+                <button class="btn btn-outline-primary" onclick="Cadastrar()">Comprar</button>
+            </div>
+        </div>
+
+    </main>
+    <script>
+
+        let listProd = [
+            { src: "https://imgs.casasbahia.com.br/55048759/1g.jpg", nome: "iPhone 12", valor: 7999.00 },
+            { src: "https://imgs.casasbahia.com.br/55057915/1g.jpg", nome: "Samsung Galaxy S21", valor: 5299.00 },
+            { src: "https://imgs.casasbahia.com.br/55015690/1xg.jpg", nome: "MacBook Air", valor: 9999.00 },
+            { src: "https://imgs.casasbahia.com.br/1564757226/1xg.jpg", nome: "PlayStation 5", valor: 4799.00 },
+            { src: "https://imgs.casasbahia.com.br/1527534710/1xg.jpg", nome: "AirPods Pro", valor: 1899.00 }
+        ];
+
+        let Carrinho = []
+
+        let main = document.getElementById("main")
+
+        function listarProd() {
+            let cont = null;
+            for (let prod of listProd) {
+                cont++
+                let card = document.createElement("div");
+
+                card.innerHTML = `<div class="card" style="width: 18rem;">
+                <img src="${prod.src}" class="card-img-top" alt="..." id="imgCard">
+                <div class="card-body">
+                    <h5 class="card-text">${prod.nome}</h5>
+                    <p>${prod.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                   <button class="btn btn-outline-primary" onclick="Cadastrar()">Comprar</button>
+                </div>
+                </div>`
+                main.appendChild(card)
+                
+            }
+        }
+
+        function Comprar() {
+
+        }
+
+
+        listarProd()
+    </script>
+
+
+</body>
+
+</html>
